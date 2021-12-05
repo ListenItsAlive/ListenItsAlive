@@ -296,9 +296,9 @@ window.onload = () => {
         })
 
     Promise.all([
-        faceapi.nets.tinyFaceDetector.loadFromUri('/'),
-//         faceapi.nets.faceExpressionNet.loadFromUri('/'),
-        await faceapi.loadFaceExpressionModel('/')
+        faceapi.nets.tinyFaceDetector.loadFromUri('/model'),
+        faceapi.nets.faceExpressionNet.loadFromUri('/model'),
+
     ]).then(() => {
         detect()
     })
