@@ -1,2 +1,2 @@
-# CLICK HERE
-[PROJECT LINK](https://listenitsalive.github.io/ListenItsAlive/)
+# Click here to interact with music!
+[Project Link](https://listenitsalive.github.io/ListenItsAlive/)
