@@ -147,12 +147,18 @@ function videoPlay(version) {
         VZone=4
     else if (version>9&&version<=12)
         VZone=5
+
+    
     if (oldVideo) pos = oldVideo.currentTime
-    //console.log(pos)
+
     if (currentVideo) oldVideo = currentVideo
     currentVideo = video
     currentVideo.style.zIndex = 10
     oldVideo.style.zIndex = -1
+
+    if (!oldVideo.paused) oldVideo.pause()
+    
+    console.log(`oldVideo pause time = ${pos} ` )
 
     if (lastVZone == VZone)
     {
@@ -169,46 +175,47 @@ function videoPlay(version) {
     }
     currentVideo.currentTime = pos
 
+    console.log(`currentVideo play time = ${pos} ` )
+
     //for (vid of allVideo)
     //    if (!vid.paused) vid.pause()
-    if (!oldVideo.paused) oldVideo.pause()
-
+    
     currentVideo.play()
 
-    if (isSame()) {
-        const volume = { val: 0 } // Start at (0, 0)
-        const tween = new TWEEN.Tween(volume) // Create a new tween that modifies 'coords'.
-            .to({ val: 1 }, 1000) // Move to (300, 200) in 1 second.
-            .easing(TWEEN.Easing.Quadratic.Out) // Use an easing function to make the animation smooth.
-            .onUpdate(() => {
-                currentVideo.volume = volume.val
-                currentVideo.style.opacity = volume.val
-            })
-            .start()
+    // if (isSame()) {
+    //     const volume = { val: 0 } // Start at (0, 0)
+    //     const tween = new TWEEN.Tween(volume) // Create a new tween that modifies 'coords'.
+    //         .to({ val: 1 }, 1000) // Move to (300, 200) in 1 second.
+    //         .easing(TWEEN.Easing.Quadratic.Out) // Use an easing function to make the animation smooth.
+    //         .onUpdate(() => {
+    //             currentVideo.volume = volume.val
+    //             currentVideo.style.opacity = volume.val
+    //         })
+    //         .start()
 
-        const volume2 = { val: 1 } // Start at (0, 0)
-        const tween2 = new TWEEN.Tween(volume2) // Create a new tween that modifies 'coords'.
-            .to({ val: 0 }, 1000) // Move to (300, 200) in 1 second.
-            .easing(TWEEN.Easing.Quadratic.Out) // Use an easing function to make the animation smooth.
-            .onUpdate(() => {
-                if (oldVideo) oldVideo.volume = volume2.val
-                if (oldVideo) oldVideo.style.opacity = volume.val
-            })
-            .onComplete(() => {
-                setTimeout(() => {
-                    if (oldVideo) oldVideo.pause()
-                }, 1000);
-            })
-            .start()
-    } else {
-        currentVideo.volume = 1
-        currentVideo.style.opacity = 1
-        setTimeout(() => {
-            if (oldVideo) oldVideo.volume = 0
-            if (oldVideo) oldVideo.style.opacity = 0
-            if (oldVideo) oldVideo.pause()
-        }, 300);
-    }
+    //     const volume2 = { val: 1 } // Start at (0, 0)
+    //     const tween2 = new TWEEN.Tween(volume2) // Create a new tween that modifies 'coords'.
+    //         .to({ val: 0 }, 1000) // Move to (300, 200) in 1 second.
+    //         .easing(TWEEN.Easing.Quadratic.Out) // Use an easing function to make the animation smooth.
+    //         .onUpdate(() => {
+    //             if (oldVideo) oldVideo.volume = volume2.val
+    //             if (oldVideo) oldVideo.style.opacity = volume.val
+    //         })
+    //         .onComplete(() => {
+    //             setTimeout(() => {
+    //                 if (oldVideo) oldVideo.pause()
+    //             }, 1000);
+    //         })
+    //         .start()
+    // } else {
+    //     currentVideo.volume = 1
+    //     currentVideo.style.opacity = 1
+    //     setTimeout(() => {
+    //         if (oldVideo) oldVideo.volume = 0
+    //         if (oldVideo) oldVideo.style.opacity = 0
+    //         if (oldVideo) oldVideo.pause()
+    //     }, 300);
+    // }
 
 }
 
@@ -298,7 +305,6 @@ window.onload = () => {
     Promise.all([
         faceapi.nets.tinyFaceDetector.load('./models'),
         faceapi.nets.faceExpressionNet.load('./models'),
-
     ]).then(() => {
         detect()
     })
