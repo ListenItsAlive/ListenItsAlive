@@ -243,3 +243,7 @@ video {
 #emotionType{
   font-size: 70px;
 }
+
+#video{ 
+   display:none 
+}
